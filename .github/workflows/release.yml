@@ -30,15 +30,15 @@ jobs:
         run: |
           cd src/github.com/vmware-tanzu/velero-plugin-for-vsphere
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          make push VERSION=${{ github.event.release.tag_name }}
-      - name: Make Release
-        if: github.event_name == 'release' && github.event.release.prerelease == false
-        env:
-          GOPATH: ${GITHUB_WORKSPACE}
-        run: |
-          cd src/github.com/vmware-tanzu/velero-plugin-for-vsphere
-          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          make release QUALIFIED_TAG=${{ github.event.release.tag_name }} RELEASE_TAG=${{ github.event.release.tag_name }}
+          REGISTRY=gcr.io/velero-gcp make push VERSION=${{ github.event.release.tag_name }}
+      #- name: Make Release
+      #  if: github.event_name == 'release' && github.event.release.prerelease == false
+      #  env:
+      #    GOPATH: ${GITHUB_WORKSPACE}
+      #  run: |
+      #    cd src/github.com/vmware-tanzu/velero-plugin-for-vsphere
+      #    echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      #    make release QUALIFIED_TAG=${{ github.event.release.tag_name }} RELEASE_TAG=${{ github.event.release.tag_name }}
       # Use the JSON key in secret to login gcr.io
       - uses: 'docker/login-action@v1'
         with:
@@ -52,4 +52,4 @@ jobs:
           GOPATH: ${GITHUB_WORKSPACE}
         run: |
           cd src/github.com/vmware-tanzu/velero-plugin-for-vsphere
-          REGISTRY=gcr.io/velero-gcp RELEASE_REGISTRY=gcr.io/velero-gcp ./hack/docker-push.sh
+          REGISTRY=gcr.io/velero-gcp RELEASE_REGISTRY=gcr.io/velero-gcp make release QUALIFIED_TAG=${{ github.event.release.tag_name }} RELEASE_TAG=${{ github.event.release.tag_name }}
