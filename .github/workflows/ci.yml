@@ -40,5 +40,5 @@ jobs:
           GOPATH: ${GITHUB_WORKSPACE}
         run: |
           cd src/github.com/vmware-tanzu/velero-plugin-for-vsphere
-          echo ${{ secrets.GCR_SA_KEY }} | docker login -u _json_key --password-stdin
+          echo ${{ secrets.GCR_SA_KEY }} | docker login gcr.io -u _json_key --password-stdin
           REGISTRY=gcr.io/velero-gcp make push
