@@ -42,6 +42,8 @@ jobs:
       # Push image to GCR to facilitate some environments that have rate limitation to docker hub, e.g. vSphere.
       - name: Publish container image to GCR
         if: github.repository == 'blackpiglet/velero-plugin-for-vsphere-test'
+        env:
+          GOPATH: ${GITHUB_WORKSPACE}
         run: |
           cd src/github.com/vmware-tanzu/velero-plugin-for-vsphere
           REGISTRY=gcr.io/velero-gcp make push
