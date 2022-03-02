@@ -43,4 +43,5 @@ jobs:
       - name: Publish container image to GCR
         if: github.repository == 'blackpiglet/velero-plugin-for-vsphere-test'
         run: |
+          cd src/github.com/vmware-tanzu/velero-plugin-for-vsphere
           REGISTRY=gcr.io/velero-gcp make push
