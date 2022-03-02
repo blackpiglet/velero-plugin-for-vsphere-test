@@ -48,5 +48,8 @@ jobs:
       # Push image to GCR to facilitate some environments that have rate limitation to docker hub, e.g. vSphere.
       - name: Publish container image to GCR
         if: github.event_name == 'release' && github.event.release.prerelease == false
+        env:
+          GOPATH: ${GITHUB_WORKSPACE}
         run: |
+          cd src/github.com/vmware-tanzu/velero-plugin-for-vsphere
           REGISTRY=gcr.io/velero-gcp RELEASE_REGISTRY=gcr.io/velero-gcp ./hack/docker-push.sh
