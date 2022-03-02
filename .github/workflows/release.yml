@@ -52,4 +52,4 @@ jobs:
           GOPATH: ${GITHUB_WORKSPACE}
         run: |
           cd src/github.com/vmware-tanzu/velero-plugin-for-vsphere
-          REGISTRY=gcr.io/velero-gcp RELEASE_REGISTRY=gcr.io/velero-gcp make release QUALIFIED_TAG=${{ github.event.release.tag_name }} RELEASE_TAG=${{ github.event.release.tag_name }}
+          RELEASE_REGISTRY=gcr.io/velero-gcp make release QUALIFIED_TAG=${{ github.event.release.tag_name }} RELEASE_TAG=${{ github.event.release.tag_name }}
